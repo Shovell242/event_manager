@@ -5,7 +5,7 @@
 	<title>Thank You!</title>
 </head>
 <body>
-	<h1>Thanks <%= name %></h1>
+	<h1>Thanks David</h1>
 	<p>Thanks for coming to our conference. We couldn't have done it without you!</p>
 	<p>
 		 Political activism is at the heart of any democracy and your voice needs to be heard.
@@ -14,12 +14,32 @@
 
 	<table>
 		<tr><th>Name</th><th>Website</th></tr>
-		<% legislators.each do |legislator| %>
+		
 		<tr>
-			<td><%= "#{legislator.first_name} #{legislator.last_name}" %></td>
-			<td><%= "#{legislator.website}" %></td>
+			<td>Cory Booker</td>
+			<td>http://www.booker.senate.gov</td>
 		</tr>
-		<% end %>
+		
+		<tr>
+			<td>Donald Payne</td>
+			<td>http://payne.house.gov</td>
+		</tr>
+		
+		<tr>
+			<td>Albio Sires</td>
+			<td>http://sires.house.gov</td>
+		</tr>
+		
+		<tr>
+			<td>Bill Pascrell</td>
+			<td>http://pascrell.house.gov</td>
+		</tr>
+		
+		<tr>
+			<td>Robert Menéndez</td>
+			<td>http://www.menendez.senate.gov</td>
+		</tr>
+		
 	</table>
 	
 </body>
