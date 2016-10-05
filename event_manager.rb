@@ -12,6 +12,14 @@ def legislators_by_zipcode(zipcode)
 	legislators = Sunlight::Congress::Legislator.by_zipcode(zipcode)
 end
 
+def save_thank_you_letters(id, letter)
+	Dir.mkdir("output") unless Dir.exists?("output")
+	filename = "output/thanks_#{id}.html"
+
+	File.open(filename, "w") { |file| file.puts form_letter }
+end
+
+
 event_file = "event_attendees.csv"
 
 contents = CSV.open(event_file, headers: true, header_converters: :symbol) 
@@ -27,11 +35,7 @@ contents.each do |row|
 	legislators = legislators_by_zipcode(zipcode)
 	form_letter = erb_template.result(binding)
 
-	Dir.mkdir("output") unless Dir.exists?("output")
-	filename = "output/thanks_#{id}.html"
-
-	File.open(filename, "w") { |file| file.puts form_letter }
-	
+	save_thank_you_letters(id, form_letter)
 	end
 end
 
