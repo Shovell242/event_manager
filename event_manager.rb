@@ -31,6 +31,24 @@ def save_thank_you_letters(id, letter)
 	File.open(filename, "w") { |file| file.puts letter }
 end
 
+def parse_hour(time)
+	format = "%m/%d/%y %H:%M"
+
+	parse = DateTime.strptime(time, format)
+
+	parse.hour
+end
+
+def time_histogram(data)
+	hash = data.reduce(Hash.new(0)) do |hsh, row|
+				 	hsh[parse_hour(row[:regdate])] += 1
+				 	hsh
+				 end
+
+	sorted = hash.sort_by { |k, v| k }
+
+	sorted.each { |k, v| puts "Hour:#{k} - Freq:#{v}" }
+end
 
 event_file = "event_attendees.csv"
 
@@ -42,6 +60,7 @@ erb_template    = ERB.new(template_letter)
 contents.each do |row|
 	id    = row[0]
 	name  = row[:first_name]
+	regdate = row[:regdate]
 	
 	zipcode     = clean_zipcode(row[:zipcode])
 	legislators = legislators_by_zipcode(zipcode)
