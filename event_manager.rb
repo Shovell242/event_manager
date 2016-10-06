@@ -8,6 +8,18 @@ def clean_zipcode(zipcode)
 	zipcode.to_s.rjust(5, "0")[0..4]
 end
 
+def clean_phonenumber(number)
+	all_nums = number.to_s.scan(/\d+/).join
+
+	if all_nums.length < 10 || all_nums.length > 11 || (all_nums.length == 11 && all_nums[0] != "1")
+		"Bad number"
+	elsif all_nums.length == 11 && all_nums[0] == "1"
+		all_nums[1..-1]
+	else
+		all_nums
+	end
+end
+		
 def legislators_by_zipcode(zipcode)
 	Sunlight::Congress::Legislator.by_zipcode(zipcode)
 end
@@ -28,9 +40,9 @@ template_letter = File.read("form_letter.erb")
 erb_template    = ERB.new(template_letter)
 
 contents.each do |row|
-	id   = row[0]
-	name = row[:first_name]
-
+	id    = row[0]
+	name  = row[:first_name]
+	
 	zipcode     = clean_zipcode(row[:zipcode])
 	legislators = legislators_by_zipcode(zipcode)
 	form_letter = erb_template.result(binding)
